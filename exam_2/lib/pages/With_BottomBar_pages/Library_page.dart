@@ -106,6 +106,23 @@ class _LibraryPageState extends State<LibraryPage> {
               SizedBox(height: 20),
               Row(
                 children: [
+                  Container(
+                    child: Icon(
+                      Icons.compare_arrows,
+                      color: Colors.white,
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Text(
+                    'Recently played',
+                    style: TextStyle(
+                        color: const Color.fromARGB(255, 76, 157, 175)),
+                  )
+                ],
+              ),
+              SizedBox(height: 20),
+              Row(
+                children: [
                   conanImage(),
                   SizedBox(width: 20),
                   Text(
