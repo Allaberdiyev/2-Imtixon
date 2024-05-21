@@ -18,14 +18,6 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _isPasswordVisible = false;
   bool _rememberMe = false;
 
-  void _login() {
-    if (_formKey.currentState!.validate()) {
-      setState(() {
-        _errorMessage = null;
-      });
-    }
-  }
-
   String? show_error(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please enter your email';
@@ -40,6 +32,27 @@ class _LoginScreenState extends State<LoginScreen> {
       return 'Please enter your password';
     }
     return null;
+  }
+
+  void _login() {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _errorMessage = null;
+      });
+      String? emailError = show_error(_emailController.text);
+      String? passwordError = _validatePassword(_passwordController.text);
+
+      if (emailError == null && passwordError == null) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage()),
+        );
+      } else {
+        setState(() {
+          _errorMessage = emailError ?? passwordError;
+        });
+      }
+    }
   }
 
   @override
@@ -163,44 +176,33 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: const TextStyle(color: Colors.red),
                         ),
                       Gap(size.height * 0.01),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => HomePage()),
-                              );
-                            },
-                            child: Container(
-                              width: size.width * 0.82,
-                              height: size.height * 0.07,
-                              decoration: BoxDecoration(
+                      GestureDetector(
+                        onTap: _login,
+                        child: Container(
+                          width: size.width * 0.82,
+                          height: size.height * 0.07,
+                          decoration: BoxDecoration(
+                            color: Colors.blue,
+                            borderRadius: BorderRadius.circular(50),
+                            boxShadow: const [
+                              BoxShadow(
                                 color: Colors.blue,
-                                borderRadius: BorderRadius.circular(50),
-                                boxShadow: const [
-                                  BoxShadow(
-                                    color: Colors.blue,
-                                    spreadRadius: 3,
-                                    blurRadius: 7,
-                                  ),
-                                ],
+                                spreadRadius: 3,
+                                blurRadius: 7,
                               ),
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  'Log in with a password',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: size.width * 0.03,
-                                  ),
-                                ),
+                            ],
+                          ),
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              'Log in with a password',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: size.width * 0.03,
                               ),
                             ),
                           ),
-                        ],
+                        ),
                       ),
                       SizedBox(height: size.height * 0.015),
                       Text(
@@ -331,7 +333,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             InkWell(
                               onTap: () {
-                                // Sign Up bosganda boshqa sahifaga o'tadi
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(

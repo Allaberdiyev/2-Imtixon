@@ -1,5 +1,6 @@
 import 'package:exam_2/pages/With_BottomBar_pages/Explore_page.dart';
 import 'package:exam_2/pages/With_BottomBar_pages/Home_page.dart';
+import 'package:exam_2/pages/With_BottomBar_pages/Playlist_page.dart';
 import 'package:flutter/material.dart';
 
 class LibraryPage extends StatefulWidget {
@@ -46,12 +47,24 @@ class _LibraryPageState extends State<LibraryPage> {
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
-                    buildContainer(
-                      size,
-                      Text(
-                        'Playlists',
-                        style: TextStyle(color: Colors.white),
-                      ),
+                    Row(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => PlaylistPage()),
+                            );
+                          },
+                          child: Text(
+                            ' Playlists ',
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     buildContainer(
                       size,
